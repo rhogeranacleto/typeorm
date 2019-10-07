@@ -1,5 +1,5 @@
 # What is Repository
-# O que é um Repositório
+# O que é um Repository
 
 `Repository` é como um `EntityManager` mas seus operações são limitadas a uma entidade.
 
