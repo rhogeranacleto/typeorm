@@ -146,9 +146,9 @@ export class PostCategory {
 }
 ```
 
-## Complete example
+## Exemplo completo
 
-Let create two entities and a view containing aggregated data from these entities:
+Vamos criar duas entidades e a view contendo dados agregados dessas entidades:
 
 ```typescript
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
@@ -213,7 +213,7 @@ export class PostCategory {
 }
 ```
 
-then fill these tables with data and request all data from PostCategory view:
+então vamos preencher essas tabelas com dados e pegar todos os dados da view PostCategory:
 
 ```typescript
 import {getManager} from "typeorm";
@@ -245,14 +245,14 @@ const postCategories = await entityManager.find(PostCategory);
 const postCategory = await entityManager.findOne(PostCategory, { id: 1 });
 ```
 
-the result in `postCategories` will be:
+o resultado em `postCategories` será:
 
 ```
 [ PostCategory { id: 1, name: 'About BMW', categoryName: 'Cars' },
   PostCategory { id: 2, name: 'About Boeing', categoryName: 'Airplanes' } ]
 ```
 
-and in `postCategory`:
+e em `postCategory`:
 
 ```
 PostCategory { id: 1, name: 'About BMW', categoryName: 'Cars' }
