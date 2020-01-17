@@ -51,7 +51,7 @@ Caminhos de diretórios suporta o padrão glob.
 Exemplo: `entitySchemas: [PostSchema, CategorySchema, "entity-schema/*.json", "modules/**/entity-schema/*.json"]`.
 Leia mais em [Entity Schemas](separating-entity-definition.md).
 
-* `migrations` - Migrations a serem carregados e usados nessa conexão.
+* `migrations` - Migrações a serem carregados e usados nessa conexão.
 Aceita tanto classes como caminhos para o diretório de onde carregar.
 Caminhos de diretórios suporta o padrão glob.
 Exemplo: `migrations: [FirstMigration, SecondMigration, "migration/*.js", "modules/**/migration/*.js"]`.
@@ -101,133 +101,126 @@ Leia mais sobre cache [aqui](./caching.md).
 
 ## Configurações de `mysql` / `mariadb`
 
-* `url` - Connection url where perform connection to. Please note that other connection options will override parameters set from url.
+* `url` - URL da conexão com o banco de dados. Note que outras opções podem sobrescrever a url configurada.
 
-* `host` - Database host.
+* `host` - Host do banco de dados.
 
-* `port` - Database host port. Default mysql port is `3306`.
+* `port` - Porta do banco de dados. Padrão do mysql é `3306`.
 
-* `username` - Database username.
+* `username` - Nome do usuário do banco de dados.
 
-* `password` - Database password.
+* `password` - Senha do banco de dados.
 
-* `database` - Database name.
+* `database` - Nome do banco de dados.
 
-* `charset` - The charset for the connection. This is called "collation" in the SQL-level of MySQL 
-(like utf8_general_ci). If a SQL-level charset is specified (like utf8mb4) then the default collation for that charset is used. (Default: `UTF8_GENERAL_CI`).
+* `charset` - O charset usado para a conexão. Isto é chamado "collation" no nivel sql do mysql
+(como utf8_general_ci). Se o charset do sql é especificado (como utf8mb4) então a collation padrão para este charset é usado. (Padrão: `UTF8_GENERAL_CI`).
 
-* `timezone` - the timezone configured on the MySQL server. This is used to typecast server date/time 
-values to JavaScript Date object and vice versa. This can be `local`, `Z`, or an offset in the form 
-`+HH:MM` or `-HH:MM`. (Default: `local`)
+* `timezone` - Fuso horário configurado no servidor MySQL. Isto é usado para a transformação de objetos de data entre o servidor e o Javascript e vice versa. Isto pode ser `local`, `Z`, ou alguma outra configuração de hora no formato `+HH:MM` ou `-HH:MM`. (Padrão: `local`)
 
-* `connectTimeout` - The milliseconds before a timeout occurs during the initial connection to the MySQL server.
- (Default: `10000`)
+* `connectTimeout` - Quantidade de milissegundos antes de ocorret timeout durante a conexão com o servidor MySQL.
+ (Padrão: `10000`)
 
-* `acquireTimeout` - The milliseconds before a timeout occurs during the initial connection to the MySql server. It differs from `connectTimeout` as it governs the TCP connection timeout where as connectTimeout does not. (default: `10000`)
+* `acquireTimeout` - Quantidade de milissegundos antes de ocorrer timeout durante a conexão inicial com o servidor MySQL. Diferencia de `connectTimeout`, pois governa o tempo de conexão TCP enquanto o connectionTimeout não. (padrão: `10000`)
  
-* `insecureAuth` - Allow connecting to MySQL instances that ask for the old (insecure) authentication method. 
-(Default: `false`)
+* `insecureAuth` - Permite conectar com instâncias MySQL que necessita de antigos (inseguros) métodos de autenticação.
+(Padrão: `false`)
  
-* `supportBigNumbers` - When dealing with big numbers (`BIGINT` and `DECIMAL` columns) in the database, 
-you should enable this option (Default: `true`)
+* `supportBigNumbers` - Permite o uso de números grandes (`BIGINT` e `DECIMAL`) no banco de dados, 
+quando habilitada essa opção (Padrão: `true`)
  
-* `bigNumberStrings` - Enabling both `supportBigNumbers` and `bigNumberStrings` forces big numbers 
-(`BIGINT` and `DECIMAL` columns) to be always returned as JavaScript String objects (Default: `true`). 
-Enabling `supportBigNumbers` but leaving `bigNumberStrings` disabled will return big numbers as String 
-objects only when they cannot be accurately represented with 
+* `bigNumberStrings` - Habilita ambos `supportBigNumbers` e `bigNumberStrings` forçando números grandes 
+(`BIGINT` e `DECIMAL`) a serem sempre retornadas como string para o JavaScript (Padrão: `true`). 
+Habilitando `supportBigNumbers` mas deixando `bigNumberStrings` desabilitade irá retornar números grandes como string apenas quando não puderem ser representados com 
 [JavaScript Number objects](http://ecma262-5.com/ELS5_HTML.htm#Section_8.5) 
-(which happens when they exceed the `[-2^53, +2^53]` range), otherwise they will be returned as 
-Number objects. This option is ignored if `supportBigNumbers` is disabled.
+(o que acontece quando eles excedem o limite de `[-2^53, +2^53]`), caso contrário irá retornar como números
+Number. Esta opção é ignorada se `supportBigNumbers` está disabilitada.
 
-* `dateStrings` - Force date types (`TIMESTAMP`, `DATETIME`, `DATE`) to be returned as strings rather than 
-inflated into JavaScript Date objects. Can be true/false or an array of type names to keep as strings. 
-(Default: `false`)
+* `dateStrings` - Força os objetos de datas (`TIMESTAMP`, `DATETIME`, `DATE`) a serem retornadas como string ao invés de objetos Date em Javascript. Pode ser true/false ou um arrau com o nome dos tipos a serem retonados como strings. 
+(Padrão: `false`)
 
-* `debug` - Prints protocol details to stdout. Can be true/false or an array of packet type names that 
-should be printed. (Default: `false`)
+* `debug` - Exibe detalhes do protocolo no console. Pode ser true/false ou um array com os tipos de logs que devem ser exibidos. (Padrão: `false`)
 
-* `trace` - Generates stack traces on Error to include call site of library entrance ("long stack traces"). 
-Slight performance penalty for most calls. (Default: `true`)
+* `trace` - Gera um stack trace em Erros para incluir o callstack ("long stack traces"). 
+Adiciona uma deficiencia de desempenho na maioria das chamadas. (Padrão: `true`)
 
-* `multipleStatements` - Allow multiple mysql statements per query. Be careful with this, it could increase the scope 
-of SQL injection attacks. (Default: `false`)
+* `multipleStatements` - Permite vários comandos por query. Tenha cuidado com isto, pode aumentar o espoto e abrir espaço para staques de injeção de SQL. (Padrão: `false`)
 
-* `flags` - List of connection flags to use other than the default ones. It is also possible to blacklist default ones.
- For more information, check [Connection Flags](https://github.com/mysqljs/mysql#connection-flags).
+* `flags` - Lista das conexões para usar outra alem da principal. É possivel adicionar exceções.
+ Para mais informações verifique [Connection Flags](https://github.com/mysqljs/mysql#connection-flags).
  
-* `ssl` -  object with ssl parameters or a string containing the name of ssl profile. 
-See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
+* `ssl` - objeto com parametros ssl ou uma string contento o nome do perfil ssl. 
+Seja [SSL options](https://github.com/mysqljs/mysql#ssl-options).
 
 ## Configurações de `postgres` / `cockroachdb`
 
-* `url` - Connection url where perform connection to. Please note that other connection options will override parameters set from url.
+* `url` - Conexão url para performar a conexão. Note que outras opções irão sobrescrever a url configurada.
 
-* `host` - Database host.
+* `host` - Host do banco de dados.
 
-* `port` - Database host port. Default postgres port is `5432`.
+* `port` - Porta do banco de dados. Porta padrão do postgres `5432`.
 
-* `username` - Database username.
+* `username` - Username do banco de dados.
 
-* `password` - Database password.
+* `password` - Senha do banco dedados.
 
-* `database` - Database name.
+* `database` - Nome do banco de dados.
 
-* `schema` - Schema name. Default is "public".
+* `schema` - Nome do schema. Padrão é "public".
 
-* `ssl` - Object with ssl parameters. See [TLS/SSL](https://node-postgres.com/features/ssl).
+* `ssl` - Objetos com configurações de ssql. Veja [TLS/SSL](https://node-postgres.com/features/ssl).
 
-* `uuidExtension` - The Postgres extension to use when generating UUIDs. Defaults to `uuid-ossp`. Can be changed to `pgcrypto` if the `uuid-ossp` extension is unavailable.
+* `uuidExtension` - Extensão do postgres para gerar UUIDs. Padrão é `uuid-ossp`. Pode ser trocada para `pgcrypto` se o `uuid-ossp` estiver indisponível.
 
-* `poolErrorHandler` - A function that get's called when underlying pool emits `'error'` event. Takes single parameter (error instance) and defaults to logging with `warn` level.
+* `poolErrorHandler` - Uma função que é chamada por debaixo dos panos quando emite um evento `'error'`. Recebe um único parâmetro (erro) e o padrão de login com nivel `warn`.
 
 ## Configurações de `sqlite`
 
-* `database` - Database path. For example "./mydb.sql"
+* `database` - Caminho do banco de dados. Por exemplo "./mydb.sql"
 
 ## Configurações de `cordova`
 
-* `database` - Database name
+* `database` - Nome do banco de dados
 
-* `location` - Where to save the database. See [cordova-sqlite-storage](https://github.com/litehelpers/Cordova-sqlite-storage#opening-a-database) for options.
+* `location` - Onde salvar o banco de dados. Veja [cordova-sqlite-storage](https://github.com/litehelpers/Cordova-sqlite-storage#opening-a-database) para opções.
 
 ## Configurações de `react-native`
-* `database` - Database name
+* `database` - Nome do banco de dados
 
-* `location` - Where to save the database. See [react-native-sqlite-storage](https://github.com/andpor/react-native-sqlite-storage#opening-a-database) for options.
+* `location` - Onde salvar o banco de dados. Veja [react-native-sqlite-storage](https://github.com/andpor/react-native-sqlite-storage#opening-a-database) para opções.
 
 ## Configurações de `nativescript`
-* `database` - Database name
+* `database` - Nome do banco de dados
 
 ## Configurações de `mssql`
 
-* `url` - Connection url where perform connection to. Please note that other connection options will override parameters set from url.
+* `url` - Url da conexão. Note que outras opções irão substituir esta configuração
 
-* `host` - Database host.
+* `host` - Host do banco de dados.
 
-* `port` - Database host port. Default mssql port is `1433`.
+* `port` - Porta do banco de dados. Padrão `1433`.
 
-* `username` - Database username.
+* `username` - Username do banco de dados.
 
-* `password` - Database password.
+* `password` - Senha do banco dedados.
 
-* `database` - Database name.
+* `database` - Nome do banco de dados.
 
-* `schema` - Schema name. Default is "public".
+* `schema` - Nome do schema. Padrão é "public".
 
-* `domain` - Once you set domain, the driver will connect to SQL Server using domain login.
+* `domain` - Uma vez que você configurar o domínio, o driver irá conectar com o server SQL Server usando o login de domínio.
 
-* `connectionTimeout` - Connection timeout in ms (default: `15000`).
+* `connectionTimeout` - Timeout da conexão em ms (Padrão: `15000`).
 
-* `requestTimeout` - Request timeout in ms (default: `15000`). NOTE: msnodesqlv8 driver doesn't support
- timeouts < 1 second.
+* `requestTimeout` - Timeout de requisição em ms (Padrão: `15000`). NOTA: o driver msnodesqlv8 não suporta timeout menor que 1 segundo.
 
-* `stream` - Stream recordsets/rows instead of returning them all at once as an argument of callback (default: `false`).
+* `stream` - Stream recordsets/rows instead of returning them all at once as an argument of callback (Padrão: `false`).
  You can also enable streaming for each request independently (`request.stream = true`). Always set to `true` if you plan to
  work with a large amount of rows.
  
-* `pool.max` - The maximum number of connections there can be in the pool (default: `10`).
+* `pool.max` - The maximum number of connections there can be in the pool (Padrão: `10`).
 
-* `pool.min` - The minimum of connections there can be in the pool (default: `0`).
+* `pool.min` - The minimum of connections there can be in the pool (Padrão: `0`).
 
 * `pool.maxWaitingClients` - maximum number of queued requests allowed, additional acquire calls will be callback with
  an err in a future cycle of the event loop.
@@ -247,32 +240,32 @@ See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
  
 * `pool.autostart` - boolean, should the pool start creating resources etc once the constructor is called, (default `true`).
 
-* `pool.evictionRunIntervalMillis` - How often to run eviction checks. Default: `0` (does not run).
+* `pool.evictionRunIntervalMillis` - How often to run eviction checks. Padrão: `0` (does not run).
 
-* `pool.numTestsPerRun` - Number of resources to check each eviction run. Default: `3`.
+* `pool.numTestsPerRun` - Number of resources to check each eviction run. Padrão: `3`.
 
 * `pool.softIdleTimeoutMillis` - amount of time an object may sit idle in the pool before it is eligible for eviction by
  the idle object evictor (if any), with the extra condition that at least "min idle" object instances remain in the pool.
  Default `-1` (nothing can get evicted).
  
 * `pool.idleTimeoutMillis` -  the minimum amount of time that an object may sit idle in the pool before it is eligible for
- eviction due to idle time. Supersedes `softIdleTimeoutMillis`. Default: `30000`.
+ eviction due to idle time. Supersedes `softIdleTimeoutMillis`. Padrão: `30000`.
  
  * `pool.errorHandler` - A function that get's called when underlying pool emits `'error'` event. Takes single parameter (error instance) and defaults to logging with `warn` level.
  
 * `options.fallbackToDefaultDb` - By default, if the database requestion by `options.database` cannot be accessed, the connection
  will fail with an error. However, if `options.fallbackToDefaultDb` is set to `true`, then the user's default database will
-  be used instead (Default: `false`).
+  be used instead (Padrão: `false`).
   
 * `options.enableAnsiNullDefault` - If true, SET ANSI_NULL_DFLT_ON ON will be set in the initial sql. This means new
  columns will be nullable by default. See the [T-SQL documentation](https://msdn.microsoft.com/en-us/library/ms187375.aspx)
- for more details. (Default: `true`).
+ for more details. (Padrão: `true`).
  
-* `options.cancelTimeout` - The number of milliseconds before the cancel (abort) of a request is considered failed (default: `5000`).
+* `options.cancelTimeout` - The number of milliseconds before the cancel (abort) of a request is considered failed (Padrão: `5000`).
 
-* `options.packetSize` - The size of TDS packets (subject to negotiation with the server). Should be a power of 2. (default: `4096`).
+* `options.packetSize` - The size of TDS packets (subject to negotiation with the server). Should be a power of 2. (Padrão: `4096`).
 
-* `options.useUTC` - A boolean determining whether to pass time values in UTC or local time. (default: `true`).
+* `options.useUTC` - A boolean determining whether to pass time values in UTC or local time. (Padrão: `true`).
 
 * `options.abortTransactionOnError` - A boolean determining whether to rollback a transaction automatically if any
  error is encountered during the given transaction's execution. This sets the value for `SET XACT_ABORT` during the
@@ -280,10 +273,10 @@ See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
 
 * `options.localAddress` - A string indicating which network interface (ip address) to use when connecting to SQL Server.
 
-* `options.useColumnNames` - A boolean determining whether to return rows as arrays or key-value collections. (default: `false`).
+* `options.useColumnNames` - A boolean determining whether to return rows as arrays or key-value collections. (Padrão: `false`).
 
 * `options.camelCaseColumns` - A boolean, controlling whether the column names returned will have the first letter
- converted to lower case (`true`) or not. This value is ignored if you provide a `columnNameReplacer`. (default: `false`).
+ converted to lower case (`true`) or not. This value is ignored if you provide a `columnNameReplacer`. (Padrão: `false`).
 
 * `options.isolationLevel` - The default isolation level that transactions will be run with. The isolation levels are
  available from `require('tedious').ISOLATION_LEVEL`.
@@ -293,7 +286,7 @@ See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
    * `SERIALIZABLE`
    * `SNAPSHOT`
    
-   (default: `READ_COMMITTED`)
+   (Padrão: `READ_COMMITTED`)
  
 * `options.connectionIsolationLevel` - The default isolation level for new connections. All out-of-transaction queries
  are executed with this setting. The isolation levels are available from `require('tedious').ISOLATION_LEVEL`.
@@ -303,26 +296,26 @@ See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
    * `SERIALIZABLE`
    * `SNAPSHOT`
    
-   (default: `READ_COMMITTED`)
+   (Padrão: `READ_COMMITTED`)
  
 * `options.readOnlyIntent` - A boolean, determining whether the connection will request read-only access from a
- SQL Server Availability Group. For more information, see here. (default: `false`).
+ SQL Server Availability Group. For more information, see here. (Padrão: `false`).
 
 * `options.encrypt` - A boolean determining whether or not the connection will be encrypted. Set to true if you're
- on Windows Azure. (default: `false`).
+ on Windows Azure. (Padrão: `false`).
  
 * `options.cryptoCredentialsDetails` - When encryption is used, an object may be supplied that will be used for the
  first argument when calling [tls.createSecurePair](http://nodejs.org/docs/latest/api/tls.html#tls_tls_createsecurepair_credentials_isserver_requestcert_rejectunauthorized)
-  (default: `{}`).
+  (Padrão: `{}`).
   
 * `options.rowCollectionOnDone` - A boolean, that when true will expose received rows in Requests' `done*` events.
  See done, [doneInProc](http://tediousjs.github.io/tedious/api-request.html#event_doneInProc)
- and [doneProc](http://tediousjs.github.io/tedious/api-request.html#event_doneProc). (default: `false`)
+ and [doneProc](http://tediousjs.github.io/tedious/api-request.html#event_doneProc). (Padrão: `false`)
    
    Caution: If many rows are received, enabling this option could result in excessive memory usage.
 
 * `options.rowCollectionOnRequestCompletion` - A boolean, that when true will expose received rows
- in Requests' completion callback. See [new Request](http://tediousjs.github.io/tedious/api-request.html#function_newRequest). (default: `false`)
+ in Requests' completion callback. See [new Request](http://tediousjs.github.io/tedious/api-request.html#function_newRequest). (Padrão: `false`)
 
    Caution: If many rows are received, enabling this option could result in excessive memory usage.
 
@@ -334,36 +327,36 @@ See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
    * `7_3_B`
    * `7_4`
    
-  (default: `7_4`)
+  (Padrão: `7_4`)
 
 * `options.debug.packet` - A boolean, controlling whether `debug` events will be emitted with text describing packet
- details (default: `false`).
+ details (Padrão: `false`).
  
 * `options.debug.data` - A boolean, controlling whether `debug` events will be emitted with text describing packet data
- details (default: `false`).
+ details (Padrão: `false`).
  
 * `options.debug.payload` - A boolean, controlling whether `debug` events will be emitted with text describing packet
- payload details (default: `false`).
+ payload details (Padrão: `false`).
  
 * `options.debug.token` - A boolean, controlling whether `debug` events will be emitted with text describing token stream
- tokens (default: `false`).
+ tokens (Padrão: `false`).
 
 ## Configurações de `mongodb`
 
-* `url` - Connection url where perform connection to. Please note that other connection options will override parameters set from url.
+* `url` - Connection url where perform connection to. Note que outras opções irão substituir esta configuração
 
-* `host` - Database host.
+* `host` - Host do banco de dados.
 
-* `port` - Database host port. Default mongodb port is `27017`.
+* `port` - Porta do banco de dados. Default mongodb port is `27017`.
 
-* `database` - Database name.
+* `database` - Nome do banco de dados.
 
 * `poolSize` - Set the maximum pool size for each individual server or proxy connection.
 
-* `ssl` - Use ssl connection (needs to have a mongod server with ssl support). Default: `false`.
+* `ssl` - Use ssl connection (needs to have a mongod server with ssl support). Padrão: `false`.
 
 * `sslValidate` - Validate mongod server certificate against ca (needs to have a mongod server with ssl support,
- 2.4 or higher). Default: `true`.
+ 2.4 or higher). Padrão: `true`.
  
 * `sslCA` - Array of valid certificates either as Buffers or Strings (needs to have a mongod server with ssl support,
  2.4 or higher).
@@ -377,33 +370,33 @@ See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
 * `sslPass` - String or buffer containing the certificate password (needs to have a mongod server with ssl support,
  2.4 or higher).
  
-* `autoReconnect` - Reconnect on error. Default: `true`.
+* `autoReconnect` - Reconnect on error. Padrão: `true`.
 
-* `noDelay` - TCP Socket NoDelay option. Default: `true`.
+* `noDelay` - TCP Socket NoDelay option. Padrão: `true`.
 
-* `keepAlive` - The number of milliseconds to wait before initiating keepAlive on the TCP socket. Default: `30000`.
+* `keepAlive` - The number of milliseconds to wait before initiating keepAlive on the TCP socket. Padrão: `30000`.
 
-* `connectTimeoutMS` - TCP Connection timeout setting. Default: `30000`.
+* `connectTimeoutMS` - TCP Connection timeout setting. Padrão: `30000`.
 
-* `socketTimeoutMS` - TCP Socket timeout setting. Default: `360000`.
+* `socketTimeoutMS` - TCP Socket timeout setting. Padrão: `360000`.
 
-* `reconnectTries` - Server attempt to reconnect #times. Default: `30`.
+* `reconnectTries` - Server attempt to reconnect #times. Padrão: `30`.
 
-* `reconnectInterval` - Server will wait #milliseconds between retries. Default: `1000`.
+* `reconnectInterval` - Server will wait #milliseconds between retries. Padrão: `1000`.
 
-* `ha` - Turn on high availability monitoring. Default: `true`.
+* `ha` - Turn on high availability monitoring. Padrão: `true`.
 
-* `haInterval` - Time between each replicaset status check. Default: `10000,5000`.
+* `haInterval` - Time between each replicaset status check. Padrão: `10000,5000`.
 
 * `replicaSet` - The name of the replicaset to connect to.
  
 * `acceptableLatencyMS` - Sets the range of servers to pick when using NEAREST (lowest ping ms + the latency fence,
- ex: range of 1 to (1 + 15) ms). Default: `15`.
+ ex: range of 1 to (1 + 15) ms). Padrão: `15`.
 
 * `secondaryAcceptableLatencyMS` - Sets the range of servers to pick when using NEAREST (lowest ping ms + the latency
- fence, ex: range of 1 to (1 + 15) ms). Default: `15`.
+ fence, ex: range of 1 to (1 + 15) ms). Padrão: `15`.
  
-* `connectWithNoPrimary` - Sets if the driver should connect even if no primary is available. Default: `false`.
+* `connectWithNoPrimary` - Sets if the driver should connect even if no primary is available. Padrão: `false`.
 
 * `authSource` - If the database authentication is dependent on another databaseName.
 
@@ -411,25 +404,25 @@ See [SSL options](https://github.com/mysqljs/mysql#ssl-options).
 
 * `wtimeout` - The write concern timeout value.
 
-* `j` - Specify a journal write concern. Default: `false`.
+* `j` - Specify a journal write concern. Padrão: `false`.
 
-* `forceServerObjectId` - Force server to assign _id values instead of driver. Default: `false`.
+* `forceServerObjectId` - Force server to assign _id values instead of driver. Padrão: `false`.
 
-* `serializeFunctions` - Serialize functions on any object. Default: `false`.
+* `serializeFunctions` - Serialize functions on any object. Padrão: `false`.
 
-* `ignoreUndefined` - Specify if the BSON serializer should ignore undefined fields. Default: `false`.
+* `ignoreUndefined` - Specify if the BSON serializer should ignore undefined fields. Padrão: `false`.
 
-* `raw` - Return document results as raw BSON buffers. Default: `false`.
+* `raw` - Return document results as raw BSON buffers. Padrão: `false`.
 
-* `promoteLongs` - Promotes Long values to number if they fit inside the 53 bits resolution. Default: `true`.
+* `promoteLongs` - Promotes Long values to number if they fit inside the 53 bits resolution. Padrão: `true`.
 
-* `promoteBuffers` - Promotes Binary BSON values to native Node Buffers. Default: `false`.
+* `promoteBuffers` - Promotes Binary BSON values to native Node Buffers. Padrão: `false`.
 
 * `promoteValues` - Promotes BSON values to native types where possible, set to false to only receive wrapper types.
- Default: `true`.
+ Padrão: `true`.
  
 * `domainsEnabled` - Enable the wrapping of the callback in the current domain, disabled by default to avoid perf hit.
- Default: `false`.
+ Padrão: `false`.
  
 * `bufferMaxEntries` - Sets a cap on how many operations the driver will buffer up before giving up on getting a
  working connection, default is -1 which is unlimited.
